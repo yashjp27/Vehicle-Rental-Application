@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "601864833610",
+    "project_id": "vehicle-rental-2",
+    "storage_bucket": "vehicle-rental-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601864833610:android:e1f5a2b79969c75a5034b3",
+        "android_client_info": {
+          "package_name": "com.example.vehicle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601864833610-g6r5pqjrghb33magcmsfqr56jkh7jsn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXlQtm-xUjKWduyGU1xi7baDEz8YBSifQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601864833610-g6r5pqjrghb33magcmsfqr56jkh7jsn2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "601864833610-dottcvmsrvj5b0bj4054cag9so8esdfv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vehicle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

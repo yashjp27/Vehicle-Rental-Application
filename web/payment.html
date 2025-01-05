@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<script>
+    // Initialize Stripe with your publishable key
+var stripe = Stripe('pk_test_51MiBiVSCK0Ri6tc5Qepg1CycGGwtNbInH3vC5eeYfnqJIgI6j1ZRivugGdcxPhR3EZogYhCv0musGOfiwhhMfQxu005UD0ZMle');
+
+// Create a payment method using Stripe Elements
+var elements = stripe.elements();
+var cardElement = elements.create('card');
+cardElement.mount('#card-element');
+
+// Handle form submission
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  stripe.createPaymentMethod({
+    type: 'card',
+    card: cardElement,
+  }).then(function (result) {
+    if (result.error) {
+      // Handle errors
+      console.error(result.error);
+    } else {
+      // Send the payment method ID to your server to confirm the payment
+      fetch('/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          paymentMethodId: result.paymentMethod.id,
+        }),
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.requiresAction) {
+          // Handle additional authentication steps
+          // e.g., 3D Secure authentication
+          handlePaymentMethodRequiresAction(data.clientSecret);
+        } else if (data.paymentIntentStatus === 'succeeded') {
+          // Payment succeeded, show success message
+          showSuccess();
+        }
+      });
+    }
+  });
+});
+
+function handlePaymentMethodRequiresAction(clientSecret) {
+  // Handle additional authentication steps, e.g., 3D Secure
+  stripe.handleCardAction(clientSecret).then(function (data) {
+    if (data.error) {
+      // Show error to your customer
+      console.error(data.error.message);
+    } else {
+      // Authentication successful, continue with the payment
+      fetch('/handle-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentIntentId: data.paymentIntent.id }),
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.paymentIntentStatus === 'succeeded') {
+          // Payment succeeded, show success message
+          showSuccess();
+        }
+      });
+    }
+  });
+}
+
+function showSuccess() {
+  // Display a success message to your customer
+  console.log('Payment succeeded!');
+}
+
+</script>
+<!-- Your payment form and elements will go here -->
+</body>
+</html>
