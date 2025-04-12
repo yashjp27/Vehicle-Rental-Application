@@ -1,7 +1,5 @@
 # Vehicle Rental App using Flutter
 
-## Demo : https://youtu.be/f1f9nqDgzPU
-
 ## Overview
 
 The Vehicle Rental App is a comprehensive mobile application developed using the Flutter framework. This app provides a platform for users to rent vehicles conveniently and efficiently. The application supports a wide range of vehicle types and offers features like vehicle search, booking, and payment integration.
